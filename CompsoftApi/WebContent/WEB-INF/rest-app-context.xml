@@ -1,0 +1,90 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<context:property-placeholder location="classpath:resources/database.properties" />
+	<context:component-scan base-package="org.jboss.tools.example.springmvc.mvc" />
+	<context:component-scan base-package="com.java" />
+
+	<mvc:annotation-driven />
+
+	<!-- <bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean> -->
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- <bean id="referenceUtils" class="com.java.utils.ReferenceUtils">
+	</bean> -->
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+			<!-- <value>com.java.model.MstAgent</value>
+				<value>com.java.model.MstAddress</value>
+				<value>com.java.model.MstAgentLink</value>
+				<value>com.java.model.MstContact</value>
+				<value>com.java.model.MstMember</value>
+				<value>com.java.model.TranMembership</value>
+				<value>com.java.model.MstPlan</value>
+				<value>com.java.model.MstPlot</value>
+				<value>com.java.model.TranPayment</value>
+				<value>com.java.model.TranPaymentDetail</value>
+				<value>com.java.model.MstBank</value>
+				<value>com.java.model.RefCode</value>
+				<value>com.java.model.MstProduct</value>
+				<value>com.java.model.MstVendProduct</value>
+				<value>com.java.model.TranAdjustment</value>
+					<value>com.java.model.TranPoints</value>
+					<value>com.java.model.TranCustCart</value>
+					<value>com.java.model.TranCustCartDetail</value> -->
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.connection.driver_class">${hibernate.connection.driver_class}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
+				<prop key="hibernate.connection.username">${hibernate.connection.username}</prop>
+				<prop key="hibernate.connection.password">${hibernate.connection.password}</prop>
+				<prop key="hibernate.connection.url">${hibernate.connection.url}</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">${hibernate.bytecode.use_reflection_optimizer}</prop>
+				<prop key="hibernate.jdbc.batch_versioned_data">${hibernate.jdbc.batch_versioned_data}</prop>
+				<prop key="hibernate.connection.pool_size">${hibernate.connection.pool_size}</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="hibernateTransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+
+
+ 
+	<mvc:resources mapping="/img/**" location="/WEB-INF/views/img/" />
+<mvc:resources mapping="../images/**" location = "/WEB-INF/views/images/" />
+
+	<mvc:default-servlet-handler />
+
+</beans>
