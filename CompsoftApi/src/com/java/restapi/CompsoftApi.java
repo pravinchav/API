@@ -34,7 +34,18 @@ public class CompsoftApi {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/")
-	public JSONObject sayPlainTextHello() {
+	public JSONObject testAPI1() {
+
+		JSONObject loPayTrans = new JSONObject();
+		loPayTrans.put("Testing", "Response Successful.");
+
+		return loPayTrans;
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/Test")
+	public JSONObject testAPI12() {
 
 		JSONObject loPayTrans = new JSONObject();
 		loPayTrans.put("Testing", "Response Successful.");
